@@ -30,8 +30,14 @@ export function getDb(): mysql.Pool {
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     waitForConnections: true,
-    connectionLimit: 10,
+    // Keep the pool deliberately small for shared cPanel MySQL hosting.
+    connectionLimit: 2,
+    maxIdle: 1,
+    idleTimeout: 60_000,
     queueLimit: 0,
+    connectTimeout: 10_000,
+    enableKeepAlive: true,
+    keepAliveInitialDelay: 0,
     charset: "utf8mb4",
   });
 
