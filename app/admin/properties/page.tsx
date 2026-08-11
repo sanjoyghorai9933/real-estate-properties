@@ -16,6 +16,7 @@ type Property = {
   price: string;
   image_path: string | null;
   status: "Active" | "Inactive";
+  is_exclusive_offer: number;
   display_order: number;
 };
 
@@ -25,7 +26,7 @@ export default async function AdminPropertiesPage({ searchParams }: { searchPara
 
   const db = getDb();
   const [rows] = await db.query(
-    `SELECT id, property_name, property_type, builder, location, configuration, price, image_path, status, display_order
+    `SELECT id, property_name, property_type, builder, location, configuration, price, image_path, status, is_exclusive_offer, display_order
      FROM properties ORDER BY display_order ASC, created_at DESC`,
   );
   const properties = rows as Property[];
@@ -56,7 +57,7 @@ export default async function AdminPropertiesPage({ searchParams }: { searchPara
                 <div key={property.id} className="flex flex-col gap-5 p-5 sm:flex-row sm:items-center sm:p-6">
                   <div className="h-28 w-full shrink-0 overflow-hidden rounded-sm bg-[#e8e2d5] sm:h-24 sm:w-36">{property.image_path ? <img src={property.image_path} alt={property.property_name} className="h-full w-full object-cover" /> : <div className="flex h-full items-center justify-center text-[9px] font-bold uppercase tracking-[0.12em] text-[#17251f]/30">No image</div>}</div>
                   <div className="min-w-0 flex-1">
-                    <div className="flex flex-wrap items-center gap-2"><span className="rounded-full bg-[#f0eadf] px-2.5 py-1 text-[9px] font-bold uppercase tracking-[0.13em] text-[#8a6738]">{property.property_type}</span><span className={`rounded-full px-2.5 py-1 text-[9px] font-bold uppercase tracking-[0.13em] ${property.status === "Active" ? "bg-[#e8f2e8] text-[#3d6944]" : "bg-[#eee] text-[#777]"}`}>{property.status}</span></div>
+                    <div className="flex flex-wrap items-center gap-2"><span className="rounded-full bg-[#f0eadf] px-2.5 py-1 text-[9px] font-bold uppercase tracking-[0.13em] text-[#8a6738]">{property.property_type}</span><span className={`rounded-full px-2.5 py-1 text-[9px] font-bold uppercase tracking-[0.13em] ${property.status === "Active" ? "bg-[#e8f2e8] text-[#3d6944]" : "bg-[#eee] text-[#777]"}`}>{property.status}</span>{property.is_exclusive_offer === 1 && <span className="rounded-full bg-[#122019] px-2.5 py-1 text-[9px] font-bold uppercase tracking-[0.13em] text-[#d4b57d]">Exclusive offer</span>}</div>
                     <h2 className="mt-2 font-serif text-2xl leading-tight">{property.property_name}</h2>
                     <p className="mt-1 text-xs text-[#17251f]/50">{property.builder || "Builder not specified"} · {property.location}</p>
                     <div className="mt-3 flex flex-wrap gap-x-5 gap-y-1 text-xs text-[#17251f]/65"><span>{property.configuration || "Configuration —"}</span><span className="font-semibold">{property.price}</span></div>
@@ -64,6 +65,7 @@ export default async function AdminPropertiesPage({ searchParams }: { searchPara
                   <div className="flex flex-col items-stretch gap-2 sm:w-52 sm:items-end">
                     <div className="mb-1 text-xs text-[#17251f]/40 sm:text-right"><p>Order {property.display_order}</p><p className="mt-1">ID #{property.id}</p></div>
                     <PropertyActions id={property.id} name={property.property_name} status={property.status} />
+                    <Link href={`/admin/properties/${property.id}`} className="text-center text-[10px] font-bold uppercase tracking-[0.14em] text-[#8a6738] hover:text-[#122019]">Edit offer selection</Link>
                   </div>
                 </div>
               ))}
