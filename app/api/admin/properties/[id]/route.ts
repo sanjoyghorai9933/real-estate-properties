@@ -31,7 +31,7 @@ export async function GET(_request: Request, { params }: { params: Promise<{ id:
   const id = getId((await params).id); if (!id) return NextResponse.json({ message: "Invalid property ID." }, { status: 400 });
   try {
     const db = getDb();
-    const [rows] = await db.execute(`SELECT id, property_name, property_type, builder, location, configuration, price, image_path, status, display_order FROM properties WHERE id = ? LIMIT 1`, [id]);
+    const [rows] = await db.execute(`SELECT id, property_name, property_type, builder, location, configuration, price, image_path, status, is_exclusive_offer, display_order FROM properties WHERE id = ? LIMIT 1`, [id]);
     const property = (rows as unknown[])[0];
     if (!property) return NextResponse.json({ message: "Property not found." }, { status: 404 });
     return NextResponse.json({ property });
@@ -50,6 +50,7 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
     const configuration = String(formData.get("configuration") ?? "").trim();
     const price = String(formData.get("price") ?? "").trim();
     const status = String(formData.get("status") ?? "Active").trim();
+    const isExclusiveOffer = formData.get("isExclusiveOffer") === "on" ? 1 : 0;
     const displayOrder = Number(formData.get("displayOrder") ?? 0);
     const image = formData.get("image");
     if (!propertyName || !location || !price || !allowedTypes.has(propertyType)) return NextResponse.json({ message: "Property name, type, location and price are required." }, { status: 400 });
@@ -63,7 +64,7 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
       const safeName = `${Date.now()}-${crypto.randomUUID()}${extension}`; const uploadDirectory = path.join(process.cwd(), "public", "uploads", "properties");
       await mkdir(uploadDirectory, { recursive: true }); await writeFile(path.join(uploadDirectory, safeName), Buffer.from(await image.arrayBuffer())); imagePath = `/uploads/properties/${safeName}`;
     }
-    await db.execute(`UPDATE properties SET property_name = ?, property_type = ?, builder = ?, location = ?, configuration = ?, price = ?, image_path = ?, status = ?, display_order = ? WHERE id = ?`, [propertyName, propertyType, builder || null, location, configuration || null, price, imagePath, status, displayOrder, id]);
+    await db.execute(`UPDATE properties SET property_name = ?, property_type = ?, builder = ?, location = ?, configuration = ?, price = ?, image_path = ?, status = ?, is_exclusive_offer = ?, display_order = ? WHERE id = ?`, [propertyName, propertyType, builder || null, location, configuration || null, price, imagePath, status, isExclusiveOffer, displayOrder, id]);
     if (imagePath !== existing.image_path) await removeLocalImage(existing.image_path);
     return NextResponse.json({ ok: true });
   } catch (error) { console.error("Property update failed:", error); return NextResponse.json({ message: "Unable to update property." }, { status: 500 }); }
