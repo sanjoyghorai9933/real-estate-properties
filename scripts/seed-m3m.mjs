@@ -42,25 +42,28 @@ const db = await mysql.createConnection({
 try {
   for (let index = 0; index < properties.length; index += 1) {
     const [name, type, builder, location, configuration, price, image] = properties[index];
-    await db.execute(
-      `INSERT INTO properties
-        (property_name, property_type, builder, location, configuration, price, image_path, status, display_order)
-       VALUES (?, ?, ?, ?, ?, ?, ?, 'Active', ?)
-       ON DUPLICATE KEY UPDATE
-         property_type = VALUES(property_type),
-         builder = VALUES(builder),
-         location = VALUES(location),
-         configuration = VALUES(configuration),
-         price = VALUES(price),
-         image_path = VALUES(image_path),
-         status = 'Active',
-         display_order = VALUES(display_order)`,
-      [name, type, builder, location, configuration, price, image, index + 1],
-    );
+    const [existingRows] = await db.execute("SELECT id FROM properties WHERE property_name = ? LIMIT 1", [name]);
+    const existing = existingRows[0];
+
+    if (existing) {
+      await db.execute(
+        `UPDATE properties
+         SET property_type = ?, builder = ?, location = ?, configuration = ?, price = ?, image_path = ?, status = 'Active', display_order = ?
+         WHERE id = ?`,
+        [type, builder, location, configuration, price, image, index + 1, existing.id],
+      );
+    } else {
+      await db.execute(
+        `INSERT INTO properties
+          (property_name, property_type, builder, location, configuration, price, image_path, status, display_order)
+         VALUES (?, ?, ?, ?, ?, ?, ?, 'Active', ?)`,
+        [name, type, builder, location, configuration, price, image, index + 1],
+      );
+    }
   }
 
-  console.log(`Seeded ${properties.length} M3M catalogue properties.`);
-  console.log("Note: thumbnail URLs are generic licensed-style placeholders; replace them with images you are authorized to use.");
+  console.log(`Seeded/updated ${properties.length} M3M catalogue properties.`);
+  console.log("Note: thumbnail URLs are generic placeholder images; replace them with images you are authorized to use.");
 } finally {
   await db.end();
 }
