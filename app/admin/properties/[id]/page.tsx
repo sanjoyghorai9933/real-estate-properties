@@ -14,6 +14,7 @@ type Property = {
   price: string;
   image_path: string | null;
   status: "Active" | "Inactive";
+  is_exclusive_offer: number;
   display_order: number;
 };
 
@@ -75,7 +76,7 @@ export default function EditPropertyPage() {
       </header>
 
       <section className="mx-auto max-w-5xl px-5 py-12 sm:px-8 lg:py-16">
-        <div className="mb-10"><p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#a27d45]">Catalogue</p><h1 className="mt-3 font-serif text-5xl tracking-tight">Edit property</h1><p className="mt-3 text-sm text-[#17251f]/50">Update the listing details, image, visibility or display order.</p></div>
+        <div className="mb-10"><p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#a27d45]">Catalogue</p><h1 className="mt-3 font-serif text-5xl tracking-tight">Edit property</h1><p className="mt-3 text-sm text-[#17251f]/50">Update the listing details, image, visibility, exclusive-offer selection or display order.</p></div>
 
         <form onSubmit={handleSubmit} className="grid gap-7 lg:grid-cols-[1.2fr_0.8fr]">
           <div className="rounded-sm bg-white p-6 shadow-[0_14px_40px_rgba(23,37,31,0.06)] ring-1 ring-[#17251f]/[0.06] sm:p-8">
@@ -89,6 +90,11 @@ export default function EditPropertyPage() {
               <div><label className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#17251f]/45">Status</label><select name="status" defaultValue={property.status} className="mt-2 h-12 w-full border-b border-[#17251f]/15 bg-transparent px-0 text-sm outline-none focus:border-[#c8a46b]"><option value="Active">Active — show publicly</option><option value="Inactive">Inactive — hide publicly</option></select></div>
               <Field label="Display order" name="displayOrder" type="number" defaultValue={String(property.display_order)} min="0" />
             </div>
+
+            <label className="mt-8 flex cursor-pointer items-start gap-4 rounded-sm border border-[#c8a46b]/35 bg-[#fbf7ee] p-5">
+              <input name="isExclusiveOffer" type="checkbox" defaultChecked={property.is_exclusive_offer === 1} className="mt-1 h-4 w-4 accent-[#122019]" />
+              <span><span className="block text-xs font-bold uppercase tracking-[0.16em] text-[#8a6738]">Exclusive offer</span><span className="mt-1.5 block text-xs leading-5 text-[#17251f]/50">Show this active property on the separate Exclusive Offers page.</span></span>
+            </label>
 
             <div className="mt-8 border-t border-[#17251f]/10 pt-7"><label className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#17251f]/45">Replace thumbnail</label><p className="mt-2 text-xs text-[#17251f]/45">JPG, PNG or WebP · maximum 5 MB</p><input name="image" type="file" accept="image/jpeg,image/png,image/webp" onChange={handleImage} className="mt-4 block w-full cursor-pointer rounded-sm border border-dashed border-[#17251f]/20 bg-[#f8f6f0] p-4 text-xs file:mr-4 file:rounded-full file:border-0 file:bg-[#122019] file:px-4 file:py-2 file:text-[10px] file:font-bold file:uppercase file:tracking-[0.12em] file:text-white" /></div>
             {error && <div className="mt-7 rounded-sm border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div>}
