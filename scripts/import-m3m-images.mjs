@@ -6,10 +6,10 @@ const images = [
   ["M3M Altitude", "https://m3mproperty.com/uploads/projects/thumb/m3m-altitude-thumbnail-1774094837.webp"],
   ["M3M Mansion", "https://www.propedge.co.in/assets/img/m3m-mansion/5.png"],
   ["M3M Crown", "https://eminenceinfrastructures.com/wp-content/uploads/2023/03/m3m-crown-sector-111-banner-43096.jpg"],
-  ["M3M Golf Hills", "https://www.luxuryresidencesindia.in/m3m-golf-hills-sector-79-gurgaon/images/highlight.webp"],
+  ["M3M Golf Hills", "https://riseinfraventures.com/media/product/939965978_m3m-golf-hills-banner.webp"],
   ["M3M St. Andrews Sector 113", "https://m3mpropertyindia.com/wp-content/uploads/2025/10/m3m-saint-andrews-sector-113-investment.webp"],
-  ["M3M Soulitude", "https://www.eliteproinfra.com/uploads/property/1685624194.jpg"],
-  ["M3M Broadway", "https://staging.megarealty.co.in/assets/upload/2020/11/2aabso-kzjfot-ozgr34.jpg"],
+  ["M3M Soulitude", "https://proptimesindia.com/assets/uploads/2025/06/whatsapp-image-2025-06-09-at-44207-pm-2_1.jpeg"],
+  ["M3M Broadway", "https://adxcorp.in/wp-content/uploads/M3M-Broadway-Gurgaon-ADXCorp.jpeg"],
   ["M3M St. Andrews 65", "https://m3mpropertiesindia.in/images/m3m-st-andrews-tab-banner.webp"],
   ["M3M Innovation Park", "https://m3mpremium.in/assets/uploads/blogs/m3m-innovation-park-manesar-banner-image_73192.webp"],
   ["M3M Opus", "https://www.homesearchs.com/blog/wp-content/uploads/2024/09/M3M-Opus.jpg"],
@@ -20,10 +20,10 @@ const images = [
   ["M3M Jacob & Co Gurgaon", "https://www.m3mestate.com/project_pics/m3m-111%20%281%29-22322.jpg"],
   ["M3M Brabus Residences", "https://www.m3mestate.com/project_pics/M3M-brabus-banner-96231.jpg"],
   ["M3M CFC Sector 113", "https://www.m3mproperties.com/project_pics/capital-financial-center-banner-1783158298-75848.jpg"],
-  ["M3M The Cullinan", "https://www.whitehat.realty/_next/image?q=75&url=https%3A%2F%2Fwhitehatrealty.in%2Fuploads%2Fprojects%2Fm3m-the-cullinan%2Fwhite-hat-realty-qnjppovvz7-16.jpg&w=3840"],
+  ["M3M The Cullinan", "https://www.vikasjoshi.in/wp-content/uploads/2025/05/M3mthecullinansector94noida.jpg"],
   ["M3M The Cullinan Avenue", "https://m3m-properties.in/images/m3m-the-cullinan-avenue-slider5.webp"],
   ["M3M Jewel", "https://www.rsbmglobal.com/storage/m3m-jewel-compressed-autox610.jpg"],
-  ["M3M Elie Saab Sector 111", "https://www.m3mprojects.net.in/m3m-elie-saab-at-scda/assets/images/main.webp"],
+  ["M3M Elie Saab Sector 111", "https://m3mpremiumprojects.com/assets/uploads/blogs/side_123_50344.webp"],
 ];
 
 const required = ["DB_HOST", "DB_PORT", "DB_NAME", "DB_USER", "DB_PASSWORD"];
