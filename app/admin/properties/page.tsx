@@ -64,8 +64,7 @@ export default async function AdminPropertiesPage({ searchParams }: { searchPara
                   </div>
                   <div className="flex flex-col items-stretch gap-2 sm:w-52 sm:items-end">
                     <div className="mb-1 text-xs text-[#17251f]/40 sm:text-right"><p>Order {property.display_order}</p><p className="mt-1">ID #{property.id}</p></div>
-                    <PropertyActions id={property.id} name={property.property_name} status={property.status} />
-                    <Link href={`/admin/properties/${property.id}`} className="text-center text-[10px] font-bold uppercase tracking-[0.14em] text-[#8a6738] hover:text-[#122019]">Edit offer selection</Link>
+                    <PropertyActions id={property.id} name={property.property_name} status={property.status} isExclusiveOffer={property.is_exclusive_offer === 1} />
                   </div>
                 </div>
               ))}
